@@ -1,0 +1,95 @@
+
+
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title> Promocion </title>
+        <style>
+            input[type=text] {
+                text-align:center;
+                border-radius: 5px;
+                border: 2px solid #39c;
+                width: 100px;
+            }
+            .redondear {
+                width: 40px;
+                height: 40px;
+                border: 2px solid black;
+                border-radius: 60px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>seleccion</h1>
+        <%
+            String url = "jdbc:mysql://localhost:3306/igualdad";
+            String usuario = "root";
+            String clave = "";
+
+            //para trabajar en web necesitamos registrar la clase
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexion = DriverManager.getConnection(url, usuario, clave);
+            try {
+                if (conexion != null) {
+
+                    String query = "SELECT * FROM promocion;";
+
+                    PreparedStatement ps = conexion.prepareStatement(query);
+                    ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()) {
+
+                        int idProm = rs.getInt(2);
+                        int id_Empresa = rs.getInt(3);
+                        String puestoAnterior = rs.getString(4);
+                        String perteEcon = rs.getString(5);
+                        int numPersProm= rs.getInt(6);
+                        int numMujProm= rs.getInt(7);
+                        int numHomProm= rs.getInt(8);
+                        String respProm = rs.getString(9);
+                        String puestoNuevo= rs.getString(10);
+                        Date fechaProm = rs.getDate(11);
+
+                       
+
+        %>
+    <center>
+
+
+        <input type ='text' value='<%=idProm%>'  disabled/>
+        <input type ='text' value='<%=id_Empresa%>' disabled />
+        <input type ='text' value='<%=puestoAnterior%>' disabled />
+        <input type ='text' value='<%=parteEcon%>' disabled/>
+        <input type ='text' value='<%=numPersProm%>'  disabled/>
+        <input type ='text' value='<%=numMujProm%>' disabled />
+        <input type ='text' value='<%=numHomProm%>' disabled />
+        <input type ='text' value='<%=respProm%>' disabled/>
+        <input type ='text' value='<%=puestoNuevo%>'  disabled/>
+        <input type ='text' value='<%=fechaProm%>' disabled />
+        
+     
+
+    </center>
+
+    <%
+
+                }
+            } else {
+                out.print("ERROR: NO SE HA PODIDO HACER LA CONSULTA");
+            }
+
+        } catch (Exception e) {
+            out.print("ERROR: CONEXION");
+        }
+
+
+    %>
+</body>
+</html>

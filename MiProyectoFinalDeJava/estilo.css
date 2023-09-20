@@ -1,0 +1,21 @@
+/* DIV TITULO */
+.div_titulo {
+    color: red;
+    font-weight: normal;
+    font-size: 2em;
+    font-family: Courier New;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* TABLE CUERPO */
+.table_cuerpo {
+    margin: auto;
+    background-color: lightblue;
+    text-align: center;
+    border: 10px solid #a7a7a7;
+    border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px 20px 20px 20px;
+    -webkit-border-radius: 20px 20px 20px 20px;
+}
+

@@ -1,0 +1,8 @@
+INSERT INTO tipo_usuario (idtipo_usuario, nombre_tipo_usuario)
+VALUES (1, 'administrador'), (2, 'tecnico'), (3, 'usuario');
+
+
+INSERT INTO usuarios (id_usuario, nombre_Usuario, apellido_Usuario, email_Usuario, telefono_Usuario, id_tipo_Usuario, contrasena)
+VALUES (01, 'pruebaadmin', "apelidoprueba", "pruebaadmin@correo.com", 00000000, 1, "prueba"), 
+(02, 'pruebatecnico', "apelidortecnico", "pruebatecnico@correo.com", 00000001, 2, "prueba"),
+(03, 'pruebausuario', "apelidousuario", "pruebausuario@correo.com", 00000002, 3, "prueba");

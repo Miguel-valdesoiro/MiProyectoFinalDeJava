@@ -1,0 +1,96 @@
+JTablet1
+--------
+
+    String[] cabecera = {"ID ALUMNO","NOMBRE", "NOTA1", "NOTA2","NOTA3","PROMEDIO"};
+    String[][] data = {};
+    DefaultTableModel dtm = new DefaultTableModel(data, cabecera);
+
+    public Jtable1() {
+        initComponents();
+        personalizar_JTable();
+        cargarDatosTable();
+    }
+
+    public void personalizar_JTable(){-->personalizar simplemente
+        
+        tblContenido.setModel(dtm);
+        tblContenido.setFont(new java.awt.Font("Lucinda Console", 0, 14));
+        tblContenido.setGridColor(Color.RED);
+        tblContenido.getTableHeader().setBackground(Color.BLACK);
+        tblContenido.getTableHeader().setForeground(Color.WHITE);
+        tblContenido.getTableHeader().setFont(new java.awt.Font("Calibri", 0, 14));
+        tblContenido.getTableHeader().setBorder(new LineBorder(new Color(255, 162, 232)));
+    }
+
+public void cargarDatosTable(){
+        
+        String url = "jdbc:mysql://localhost:3306/zoologico";      
+        
+        // el usuario
+        
+            String usuario ="root";
+        //la clave en nuestro caso no tenemos clave
+            String clave ="";
+        
+            try{
+                Connection conexion=DriverManager.getConnection(url,usuario,clave);
+                
+                if (conexion !=null){
+                    
+                    JOptionPane.showMessageDialog(this,"OK CONEXION","INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+                    
+                    //vamos a hacer una query desde aqui
+                    
+                    String query = "Select * from Zoologico";
+                    // hay que mandarlo para ello hay que convertir
+                    PreparedStatement ps = conexion.prepareStatement(query);
+                    
+                    //ahora hay que hacer lo que nos muestras 
+                    ResultSet rs = ps.executeQuery();
+                                
+                    //hacemos el fblanco
+                    String[] fblanco ={"","","","","",""};
+                    
+                    int i =0;
+                    while(rs.next()){
+                        
+                       //pintamos en la linea en blanco
+                       
+                       dtm.addRow(fblanco);
+                                     
+                     // hay que ponerlo en el orden de la tabla usar Describe en bd
+                     // cogemos las 4 primeras columnas
+                        String idZoo= rs.getString(1);//(1) la posicion en la bd de columna
+                        String descripcion=rs.getString(2);
+                        String ciudad=rs.getString(3);
+                        double superficie=rs.getDouble(4);
+                        double presupuesto =rs.getDouble(5);
+                        String pais = rs.getString(6);
+                        
+                        
+                        //añadimos los valores
+                        dtm.setValueAt(idZoo,       i, 0);
+                        dtm.setValueAt(descripcion, i, 1);
+                        dtm.setValueAt(ciudad,      i, 2);
+                        dtm.setValueAt(superficie,  i, 3);
+                        dtm.setValueAt(presupuesto, i, 4);
+                        dtm.setValueAt(pais,        i, 5);
+                        
+                        //aqui incrementamos a 1
+                        i =i+1;                                 
+                    }
+                    conexion.close();
+                    
+                }else{
+                   
+                    JOptionPane.showMessageDialog(this,"ERROR: Conexion","ERROR",JOptionPane.ERROR_MESSAGE);
+                }
+                
+            }catch(Exception e){
+                
+                
+                JOptionPane.showMessageDialog(this,"ERROR: "+e,"ERROR",JOptionPane.ERROR_MESSAGE);
+            }
+       
+
+    }

@@ -1,0 +1,178 @@
+DROP DATABASE IF EXISTS igualdad;
+CREATE DATABASE igualdad;
+USE igualdad;
+
+DROP TABLE IF EXISTS empresa;
+CREATE TABLE IF NOT EXISTS `empresa` (
+  `id_Empresa` INT NOT NULL AUTO_INCREMENT,
+  `razon_Social` VARCHAR(50) NOT NULL,
+  `cif_Empresa` VARCHAR(50) NOT NULL,
+  `domicilio_Social` VARCHAR(45) NULL,
+  `forma_Juridica` VARCHAR(45) NULL,
+  `year_Constitucion` INT(4) NULL,
+  `responsable_Empresa` VARCHAR(45) NULL,
+  `cargo_Responsable_Empresa` VARCHAR(45) NULL,
+  `sector_Empresa` VARCHAR(45) NULL,
+  `cnae_Empresa` VARCHAR(45) NULL,
+  `convenio_Colectivo_Empresa` VARCHAR(45) NULL,
+  `mujeres_Empresa` VARCHAR(45) NULL,
+  `hombres_Empresa` VARCHAR(45) NULL,
+  `centros_Empresa` VARCHAR(45) NULL,
+  `contacto_Empresa` VARCHAR(45) NULL,
+  `mail_Empresa` VARCHAR(45) NULL,
+  `tlf_Empresa` VARCHAR(45) NULL,
+  `usu_Alta` VARCHAR(45) NULL,
+  `fecha_Inicio_Contrato` DATE NULL,
+  `fecha_Final_Contrato` DATE NULL,
+  `fecha_Inicio_Plan_Igualdad` DATE NULL,
+  `fecha_Final_Plan_Igualdad` DATE NULL,
+  PRIMARY KEY (`id_Empresa`))
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS seleccion;
+CREATE TABLE IF NOT EXISTS `seleccion` (
+  `id_Seleccion` INT NOT NULL AUTO_INCREMENT,
+  `id_Empresa`INT NULL,
+  `id_Puesto` VARCHAR(45) NULL,
+  `criterio_Seleccion` VARCHAR(45) NULL,
+  `anuncio_Seleccion` VARCHAR(45) NULL,
+  `responsable_Seleccion` VARCHAR(45) NULL,
+  `genero_Responsable` VARCHAR(45) NULL,
+  `genero_Seleccion` VARCHAR(45) NULL,
+  `tipo_Seleccion` VARCHAR(45) NULL,
+  `numero_Hombres` INT NULL,
+  `numero_Mujeres` INT NULL,
+  PRIMARY KEY (`id_Seleccion`),
+  FOREIGN KEY(id_Empresa)
+    REFERENCES empresa(id_Empresa))
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS promocion;
+CREATE TABLE IF NOT EXISTS `promocion` (
+  `id_Promocion` INT NOT NULL AUTO_INCREMENT,
+  `id_Empresa` INT NULL,
+  `puesto_Anterior` VARCHAR(45) NULL,
+  `variacion_Salario` VARCHAR(45) NULL,
+  `num_Candidatos_Prom` INT NULL,
+  `candidatos_Mujeres` INT NULL,
+  `candidatos_Hombres` INT NULL,
+  `responsable_Promocion` VARCHAR(45) NULL,
+  `puesto_Nuevo` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_Promocion`),
+FOREIGN KEY(id_Empresa)
+    REFERENCES empresa(id_Empresa))
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS formacion;
+CREATE TABLE IF NOT EXISTS `formacion` (
+  `id_Formacion` VARCHAR(11) NOT NULL,
+  `horario` VARCHAR(45) NULL,
+  fuera_Horario_Laboral VARCHAR(45) NULL,
+  `voluntariado` VARCHAR(45) NULL,
+  `modalidad` VARCHAR(45) NULL,
+  `horas_Totales` VARCHAR(45) NULL,
+  `numero_Mujeres` INT NULL,
+  `numero_Hombres` INT NULL,
+  `criterio_Seleccion` VARCHAR(45) NULL,
+  `informar_Seleccion` VARCHAR(45) NULL,
+  `id_Empresa` INT NOT NULL,
+  `observaciones_Formacion` VARCHAR(250) NULL,
+  `fecha_inicio` DATE NULL,
+  PRIMARY KEY (`id_Formacion`),
+  FOREIGN KEY(id_Empresa)
+    REFERENCES empresa(id_Empresa))
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS tipo_Usuario;
+CREATE TABLE IF NOT EXISTS tipo_Usuario (
+  `idtipo_Usuario` INT NOT NULL AUTO_INCREMENT,
+  `nombre_Tipo_Usuario` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idtipo_Usuario`))
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS Usuarios;
+CREATE TABLE IF NOT EXISTS Usuarios (
+  `id_Usuario` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `nombre_Usuario` VARCHAR(45) NOT NULL,
+  `apellido_Usuario` VARCHAR(100) NOT NULL,
+  `email_Usuario` VARCHAR(45),
+    telefono_Usuario VARCHAR(12),
+    `id_tipo_Usuario` INT NOT NULL,  
+     FOREIGN KEY (id_tipo_Usuario)
+    REFERENCES tipo_usuario(idtipo_Usuario))
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS emp_Usuario;
+CREATE TABLE IF NOT EXISTS `emp_Usuario` (
+  `id_Emp_Usu` INT NOT NULL AUTO_INCREMENT,
+  `id_Empresa` INT NOT NULL,
+  `id_Usuario` VARCHAR(45) NOT NULL,
+  `Usuarios_id_Usuario` INT NOT NULL,
+  PRIMARY KEY (`id_Emp_Usu`),
+    FOREIGN KEY (`Usuarios_id_Usuario`)
+    REFERENCES `Usuarios` (`id_Usuario`),
+    FOREIGN KEY(id_Empresa)
+    REFERENCES empresa (id_Empresa))
+ENGINE = InnoDB;
+
+
+DROP TABLE IF EXISTS puesto;
+CREATE TABLE  IF NOT EXISTS puesto(
+    id_Puesto  INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nombre_Puesto VARCHAR(100) NOT NULL,
+    id_Empresa INT NOT NULL,
+    mujeres_Puesto INT,
+    hombres_puesto INT,
+    FOREIGN KEY(id_Empresa)
+    REFERENCES empresa(id_empresa))
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS comision;
+CREATE TABLE  IF NOT EXISTS comision(
+    id_Comision  INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Empresa INT NOT NULL,
+    tecnico1  VARCHAR(45) NOT NULL,
+    tecnico2  VARCHAR(45) NOT NULL,
+    tecnico3  VARCHAR(45) NOT NULL,
+    FOREIGN KEY(id_Empresa)
+    REFERENCES empresa(id_empresa))
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS campaña;
+CREATE TABLE  IF NOT EXISTS campaña(
+    id_Campaña INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Empresa INT NOT NULL,
+    concepto  VARCHAR(255) NOT NULL,
+    fecha_Inicio DATE NOT NULL,
+    fecha_Final DATE NOT NULL,
+    comunicacion  VARCHAR(255) NOT NULL,
+    FOREIGN KEY(id_Empresa)
+    REFERENCES empresa(id_Empresa))
+ENGINE = InnoDB;
+
+
+DROP TABLE IF EXISTS acoso;
+CREATE TABLE  IF NOT EXISTS acoso(
+    id_Acoso INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Empresa INT NOT NULL,
+    tipo_Acoso VARCHAR(255) NOT NULL,
+    fecha_Alta DATE NOT NULL,
+    protocolo VARCHAR(255) NOT NULL,
+    FOREIGN KEY(id_Empresa)
+    REFERENCES empresa(id_Empresa))
+ENGINE = InnoDB;
+
+
+DROP TABLE IF EXISTS carteleria;
+CREATE TABLE  IF NOT EXISTS carteleria(
+    id_Carteleria INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_Campaña INT NOT NULL,
+    archivo  VARCHAR(255) NOT NULL,
+    FOREIGN KEY(id_Campaña)
+    REFERENCES campaña(id_Campaña))
+ENGINE = InnoDB;
+
+
+
+
+

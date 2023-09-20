@@ -1,0 +1,171 @@
+
+package java domain;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class OperacionesCrudProm {
+
+    private Connection conexion;
+
+    public OperacionesCrudProm(String db) {
+
+        String url = "jdbc:mysql://localhost:3306/" + db;
+        String usuario = "root";
+        String clave = "";
+
+        try {
+            //registramos el driver---> examen pregunta
+            Class.forName("com.mysql.jdbc.Driver");
+            conexion = DriverManager.getConnection(url, usuario, clave);
+
+        } catch (Exception e) {
+            System.out.println("ERROR: CONEXION");
+        }
+    }
+// cambiamos la lista List<String por un hasMap
+
+    public Map<String, Promocion> getHashMapPromocion() {
+
+        Map<String, Promocion> promocion_hm = new HashMap<>();
+
+        String query = "SELECT * FROM promocion";
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                int idProm=rs.getInt(1);
+		int id_Empresa=rs.getInt(2);
+		String puestoAnterior = rs.getString(3);
+                String parteEcon= rs.getString(4);
+                int numPersProm= rs.getInt(5);
+                int numMujProm= rs.getInt(6);
+                int numHomProm = rs.getInt(7);
+		String respProm = rs.getString(8);
+		String puestoNuevo = rs.getString(9);
+		Date fechaProm = rs.getDate(10);
+
+                //creamos el objeto para pasarlo al hashMap
+                Promocion promocion = new Promocion(idProm, id_Empresa,puestoAnterior,parteEcon,numPersProm, numMujProm,numHomProm, respProm, puestoNuevo,fechaProm);
+
+                promocion_hm.put(promocion.getIdProm(), promocion);
+
+            }
+
+        } catch (Exception e) {
+
+            promocion_hm = null;
+        }
+
+        return promocion_hm;
+    }
+
+    public boolean insertarPromocion(Promocion promocion) {
+
+        // preparamos la query
+        boolean bandera = true;
+
+        String query = "INSERT INTO promocion VALUES(?,?,?,?,?,?,?,?,?,?);";
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            	ps.setInt(1, promocion.getIdProm());
+		ps.setInt(2, promocion.getId_Empresa());
+            	ps.setString(3, promocion.getPuestoAnterior());
+           	ps.setString(4, promocion.getParteEcon());
+		ps.setInt(5, promocion.getNumPersProm());
+		ps.setInt(6, promocion.getNumMujProm());
+		ps.setInt(7, promocion.getNumHomProm());
+		ps.setString(8, promocion.getRespProm());
+		ps.setString(9, promocion.getPuestoNuevo());
+		ps.setDate(10, promocion.getFechaProm());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            bandera = false;
+        }
+
+        return bandera;
+    }
+
+    public String getIdProm() {
+       	int numero =0;
+        String query = "select idProm from promocion order by idProm desc Limit 1;";
+        
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                idProm = rs.getInt(1);
+            }
+           numero =  idProm+1;
+          
+        } catch (Exception e) {
+
+        }
+
+        return "A"+numero;
+    }
+    
+     public boolean eliminarPromocion(int idProm{
+        boolean bandera = true;
+        
+         String query = "DELETE FROM promocion WHERE idProm= ?";
+        PreparedStatement ps = null;
+        try{
+           
+            ps=conexion.prepareStatement(query);
+            ps.setInt(1, idProm);
+            ps.executeUpdate();    
+            
+        }catch (Exception e){
+            bandera = false;
+            System.out.println("ERROR");
+        }
+     return bandera;
+     }
+  
+public boolean actualizarPromocion(Promocion promocion){
+        
+        String query= "UPDATE promocion SET idProm =?,\n" +
+"		id_Empresa=?,puestoAnterior=?,\n" +
+"		parteEcon=?,numPersProm=?, \n" +
+"                numMujProm=?, numHomProm=?,\n" + 
+"		respProm=?, puestoNuevo=?, fechaProm=?,\n" +
+ "                WHERE idProm=?;
+                 
+        
+        try{
+            
+            PreparedStatement ps = conexion.prepareStatement(query);
+            	ps.setInt(1, promocion.getIdProm());
+		ps.setInt(2, promocion.getId_Empresa());
+            	ps.setString(3, promocion.getPuestoAnterior());
+           	ps.setString(4, promocion.getParteEcon());
+		ps.setInt(5, promocion.getNumPersProm());
+		ps.setInt(6, promocion.getNumMujProm());
+		ps.setInt(7, promocion.getNumHomProm());
+		ps.setString(8, promocion.getRespProm());
+		ps.setString(9, promocion.getPuestoNuevo());
+		ps.setDate(10, promocion.getFechaProm());
+            ps.executeUpdate();
+                        
+        }catch(Exception e){
+            bandera = false;
+            
+        }
+       return bandera; 
+       
+    }
+}

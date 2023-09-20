@@ -1,0 +1,180 @@
+
+CONEXION SQL
+------------
+
+Una vez que tenemos el servidor levantadod el XAMMP
+
+   SERVIDOR              DRIVER               JAVA
+_________               ________            ________
+|       |               |      |            |      |
+|       | -------->     |      |-------->   |      |
+|       |               |______|            |______|
+|_______|
+    |                   ARCHIVO.JAR
+    |  
+  Aqui estan las BD   mvnrepository.com
+
+
+
+Descargamos el jar y lo copiamos en el proyecto donde lo vamos a meter en 
+Librerias del proyecto en .jar Folder
+
+Una vez instalado creamos el paquete mysql_zoologico
+hay  que hacer una conexion con la bd
+
+
+importamos las clases
+import java.sql.DriverManager;--->indica la url, usuario y bd
+import java.sql.Connection;---> para conexion
+import java.sql.PreparedStatement;-->hay que importar esta clase para enviar la query
+
+creamos un main class....
+
+ // parametro de conexion
+
+                         //protocolo, ip del servidor, el puerto, nombre de la bd
+        
+            String url = "jdbc:mysql://localhost:      3306      /zoologico"      ;     
+                                       127.0.0.1
+        
+ // el usuario
+ String usuario ="root";--->
+//la clave en nuestro caso no tenemos clave
+ String clave ="";--->
+
+
+
+ try{
+        Connection conexion=DriverManager.getConnection(url,usuario,clave);
+            
+        if (conexion !=null){
+            System.out.println("OK: Conexion");--> comprueba que este conectado
+        
+        Hacemos una query
+
+            String query = "Select * from Zoologico";
+
+        hay que mandarlo para ello hay que convertir
+             PreparedStatement ps = conexion.prepareStatement(query);
+                               --
+                              objeto
+                               
+        }else{
+                System.out.println("ERROR: Conexion");-->no conexion
+        }
+                
+         }catch(Exception e){
+                
+            System.out.println("ERROR: "+e);
+         }
+
+Ejercicio 7
+-----------
+
+vamos a conectarnos con  una tabla para ver como funciona
+
+
+public static void main(String[] args) {
+       
+         String url1 = "jdbc:mysql://localhost:3306/zoologico";      
+         String url2 = "jdbc:mysql://localhost:3306/tiendarabanal";  
+        // el usuario
+        
+            String usuario ="root";
+            
+            
+        //la clave en nuestro caso no tenemos clave
+            String clave ="";
+                
+            try{
+                Connection conexion1=DriverManager.getConnection(url1,usuario,clave);
+                Connection conexion2=DriverManager.getConnection(url2,usuario,clave);
+                
+                if (conexion1 !=null && conexion2 !=null){
+                    
+                    System.out.println("OK: Conexion "+conexion1.getCatalog()+" "+conexion2.getCatalog());
+                                                                |____________|
+                                                                 me sale la bd conectada
+
+para mostrar todas las tablas de la bd zoologico
+
+
+             try{
+                        
+                PreparedStatement ps = conexion1.prepareStatement(query);
+                ResultSet rs= ps.executeQuery();-->recibe todos los registros
+                
+                // para recorrer los registros se utiliza un while
+                while(rs.next()){
+
+              _____/String tabla= rs.getString(1);-->solo me devuelve 1 columna
+                   \String tabla= rs.getString("Tables_in_Zoologico");
+                            
+                            System.out.println(tabla);
+                        }
+                        
+                        
+                    } catch (Exception e){
+                        
+                    
+                    }  
+
+Principal 8
+----------- 
+
+ //hacemos un arraylist para coger el nombre de las tablas de la bd 
+           List<String> tabla_al = new ArrayList<String>();
+           String query1="show tables";
+           String query2="show columns from";
+           
+           //cogemos el ps y lo ponemos en null para luego poder recoger
+           PreparedStatement ps = null;
+            
+            try{
+                Connection conexion1=DriverManager.getConnection(url1,usuario,clave);
+                Connection conexion2=DriverManager.getConnection(url2,usuario,clave);
+                
+                if (conexion1 !=null && conexion2 !=null){
+                    
+                    System.out.println("OK: Conexion "+conexion1.getCatalog()+" "+conexion2.getCatalog());
+                              
+                    try{
+                        //preparamos la query y a la hora de coger los registros
+                        ps = conexion1.prepareStatement(query1);
+                                       
+                        //recibe todos los registros
+                        ResultSet rs= ps.executeQuery();
+                                          
+                        // para recorrer los registros se utiliza un while
+                        
+                        while(rs.next()){
+                            //solo me devuelve 1 columna
+                            String tabla= rs.getString(1);
+                            //String tabla= rs.getString("Tables_in_Zoologico");
+                            System.out.println(tabla);
+                            // voy a añadir aqui las tablas al arrayList
+                            tabla_al.add(tabla);
+                            
+                                                   
+                        }
+                         System.out.println(Arrays.asList(tabla_al));
+                         System.out.println("");
+                        //hago un for para recorrer y preparar la query2
+                        for(String s:tabla_al){
+                            
+                            String s1 = query2 +" "+s;
+                            
+                            ps = conexion1.prepareStatement(s1);
+                            ResultSet rs2= ps.executeQuery();
+                       
+                        System.out.println("");
+                        while(rs2.next()){
+                            //solo me devuelve 1 columna
+                            String columna= rs2.getString(1);
+                            //String tabla= rs.getString("Tables_in_Zoologico");
+                            System.out.println(columna);
+                            // voy a añadir aqui las tablas al arrayList
+                           
+                        }
+                        s1="";
+                        }

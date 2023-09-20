@@ -1,0 +1,99 @@
+<%-- 
+    Document   : index
+    Created on : 16-nov-2022, 18:54:36
+    Author     : pedro
+--%>
+
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title> empresa </title>
+        <style>
+            input[type=text] {
+                text-align:center;
+                border-radius: 5px;
+                border: 2px solid #39c;
+                width: 100px;
+            }
+            .redondear {
+                width: 40px;
+                height: 40px;
+                border: 2px solid black;
+                border-radius: 60px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>seleccion</h1>
+        <%
+            String url = "jdbc:mysql://localhost:3306/igualdad";
+            String usuario = "root";
+            String clave = "";
+
+            //para trabajar en web necesitamos registrar la clase
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexion = DriverManager.getConnection(url, usuario, clave);
+            try {
+                if (conexion != null) {
+
+                    String query = "SELECT * FROM seleccion;";
+
+                    PreparedStatement ps = conexion.prepareStatement(query);
+                    ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()) {
+
+                        int id_Empresa = rs.getInt(2);
+                        String id_Puesto = rs.getString(3);
+                        String criterio_Seleccion = rs.getString(4);
+                        String anuncio_Seleccion = rs.getString(5);
+                        String responsable_Seleccion= rs.getString(6);
+                        String genero_responsable = rs.getString(7);
+                        String genero_Seleccion = rs.getString(8);
+                        String tipo_Seleccion = rs.getString(9);
+                        int numero_Hombres = rs.getInt(10);
+                        int numero_mujeres = rs.getInt(11);
+
+                       
+
+        %>
+    <center>
+
+
+        <input type ='text' value='<%=id_Empresa%>'  disabled/>
+        <input type ='text' value='<%=id_Puesto%>' disabled />
+        <input type ='text' value='<%=criterio_Seleccion%>' disabled />
+        <input type ='text' value='<%=anuncio_Seleccion%>' disabled/>
+        <input type ='text' value='<%=responsable_Seleccion%>'  disabled/>
+        <input type ='text' value='<%=genero_responsable%>' disabled />
+        <input type ='text' value='<%=genero_Seleccion%>' disabled />
+        <input type ='text' value='<%=tipo_Seleccion%>' disabled/>
+        <input type ='text' value='<%=numero_Hombres%>'  disabled/>
+        <input type ='text' value='<%=numero_mujeres%>' disabled />
+        
+     
+
+    </center>
+
+    <%
+
+                }
+            } else {
+                out.print("ERROR: NO SE HA PODIDO HACER LA CONSULTA");
+            }
+
+        } catch (Exception e) {
+            out.print("ERROR: CONEXION");
+        }
+
+
+    %>
+</body>
+</html>

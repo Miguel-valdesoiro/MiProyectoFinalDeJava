@@ -1,0 +1,85 @@
+public class OperacionesCrud {
+
+    public boolean insertarEmpresa(Empresa empresa) {
+
+        boolean bandera = true;
+
+        String query = "INSERT INTO empresa VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+                + "?,?,?,?,?,?,?);";
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setString(1, empresa.getRazonSocial());
+            ps.setString(2, empresa.getCif_Empresa());
+            ps.setString(3, empresa.getDomicilio_Social());
+            ps.setString(4, empresa.getForma_Juridica());
+            ps.setInt(5, empresa.getYear_Constitucion());
+            ps.setString(6, empresa.getResponsable_Empresa());
+            ps.setString(7, empresa.getCargo_Responsable_Empresa());
+            ps.setString(8, empresa.getSector_Empresa());
+            ps.setString(9, empresa.getCnae_Empresa());
+            ps.setString(10, empresa.getConvenio_Colectivo_Empresa());
+            ps.setInt(11, empresa.getMujeres_Empresa());
+            ps.setInt(12, empresa.getHombres_Empresa());
+            ps.setString(13, empresa.getCentros_Empresa());
+            ps.setString(14, empresa.getContacto_Empresa());
+            ps.setString(15, empresa.getMail_Empresa());
+            ps.setString(16, empresa.getTlf_Empresa());
+            ps.setString(17, empresa.getUsu_Alta());
+            ps.setDate(18, empresa.getFecha_Inicio_Contrato());
+            ps.setDate(19, empresa.getFecha_Final_Contacto());
+            ps.setDate(20, empresa.getFecha_Inicio_Plan_Igualdad());
+            ps.setDate(21, empresa.getFecha_Final_Plan_Igualdad());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            bandera = false;
+        }
+
+        return bandera;
+    }
+
+    public boolean actualizarEmpresa(Empresa empresa){
+        
+        boolean bandera = true;
+        String query= "UPDATE empresa SET razon_social=?,"+"cif_Empresa=?,"+"domicilio_Social=?,"+"forma_juridica=?,"+"year_Constitucion=?,"
+                + "responsable_empresa=?,"+"cargo_Responsable=?,"+"sector_empresa=?,"+"cnae_Empresa=?,"+"convenio_Colectivo=?"
+                +"mujeres_Empresa=?,"+"hombres_Empresa=?,"+"centros_Empresa=?,"+"contacto_empresa=?,"+"mail_Empresa=?,"+"telefono_Empresa=?,"+"usu_alta=?"
+                +"fecha_inicio_contrato=?,"+"fecha_final_contrato=?,"+"fecha_inicio_plan_igualdad=?,"+"fecha_final_plan_igualdad=? WHERE codigo =?,";
+        
+        try{
+            
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setString(1, empresa.getRazon_Social());
+            ps.setString(2, empresa.getCif_Empresa());
+            ps.setString(3, empresa.getDomicilio_Social());
+            ps.setString(4, empresa.getForma_Juridica());
+            ps.setInt(5, empresa.getYear_Constitucion());
+            ps.setString(6, empresa.getResponsable_Empresa());
+            ps.setString(7, empresa.getCargo_Responsable_Empresa());
+            ps.setString(8, empresa.getSector_Empresa());
+            ps.setString(9, empresa.getCnae_Empresa());
+            ps.setString(10, empresa.getConvenio_Colectivo_Empresa());
+            ps.setInt(11, empresa.getMujeres_Empresa());
+            ps.setInt(12, empresa.getHombres_Empresa());
+            ps.setString(13, empresa.getCentros_Empresa());
+            ps.setString(14, empresa.getContacto_empresa());
+            ps.setString(15, empresa.getMail_Empresa());
+            ps.setString(16, empresa.getTelefono_Empresa());
+            ps.setString(17, empresa.getUsu_alta());
+            ps.setDate(18, (java.sql.Date) empresa.getFecha_inicio_contrato());
+            ps.setDate(19, (java.sql.Date)empresa.getFecha_final_contrato());
+            ps.setDate(20, (java.sql.Date)empresa.getFecha_inicio_plan_igualdad());
+            ps.setDate(21, (java.sql.Date)empresa.getFecha_final_plan_igualdad());
+            
+            ps.executeUpdate();
+                        
+        }catch (Exception e) {
+            bandera = false;
+            System.out.println("ERROR");
+        }
+       return bandera; 
+       
+    }
+
+}

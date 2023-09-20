@@ -1,0 +1,269 @@
+JAVA WEB
+-------------
+
+Para introducir comando JAVA se utiliza
+
+<%---------------%>---> como todo html va todo con etiquetas
+
+Se puden importar librerias como
+
+<%@page import="java.util.Date"%>
+
+en la carpeta de apache tomcat se pueden guardar los proyuectos en la ruta
+WEBAPPS
+
+se pasan lois ficheros  .war ses haciendo como los métodos .jar en la carpeta DIR
+
+
+
+Aunque la predeterminada para ejecutar el programa es index.jsp se puede cambiar.
+
+En proyecto boton dcho. propiedades---> run--> Relative URL se pone la página que queremos.
+
+
+para enlazar distintas páginas hacemos lo siguiente:
+el proyecto creamos un folder 
+
+
+Hojas de estilos
+
+input[type=text], input[type=submit], input[type=button] {
+                text-align:center;--->alineación centrado de texto
+                border-radius: 5px;---> borde redondeado
+                border: 2px solid #39c;-> tiene una línea de contorno de 2 pix
+                width: 30px; ------> el ancho
+            }
+
+para dejar espacios en blanco se utiliza
+
+&nbsp;--> no break space
+
+hay 2 formas de hacer las cosas
+
+   <!-- Cajitas con las que vamos a logearnos en una página -->
+       <!-- Vamos a utilizar expresiones-->
+                             |______________|
+     
+        <% 
+            for(int i =1;i<13;i++){   ----> codigo JAVA
+         %>   
+    <center>       
+         <input type ='text' value ='3' />&nbsp;*---> se definen como text los cuadros de texto
+         <input type ='text' value ='<%= i %>'/>&nbsp;=
+         <input type ='text' value ='<%=3* i %>'/><br> 
+    </center>         
+          <%    
+            System.out.println(3+ " x "+i+" = "+(3*i)); 
+              }
+             %>       
+    </body>
+
+Se mezcla el codigo java con el html, se mezclan el codigo html con las variables
+
+
+   <!-- Cajitas con las que vamos a logearnos en una página -->
+        <!-- Vamos a utilizar scriples-->
+                                         |_____|
+        <%
+            for (int i = 1; i < 13; i++) {
+                out.print(" <center> ");                                                               \
+                out.print("<input type ='text' value ='3' />&nbsp;&nbsp;*");           \
+                out.print("<input type ='text' value =' "  + i + " '/>&nbsp;&nbsp;="); |  codigo JAVA
+                out.print("<input type ='text' value =' " + (3* i) + " '/><br> ");          /
+                out.print(" </center> ");                                                                /
+            }
+        %>   
+
+Si es todo html es mejor hacerlo así, es más para armar una página
+
+    Si necesitamos que utilizar con el usuario y tiene que introducir por cajita
+Ejemplo 3
+
+
+Utilizamos un boton radio Boton-radio
+
+ <% 
+                String n= "0";---> para que no de problemas le damos el valor de 0
+                if(request .getParameter("cmdEnviar") != null){---> si coges el parametro de cmd es distinto a null
+                   n  = request.getParameter("rNumero");---> recojo lo que esté en Value
+            }
+           %>
+
+<%
+        for (int i = 1; i < 13; i++) {
+    %>   
+    <center>       
+        <input type ='text' value ='<%= n%>'/>&nbsp;*
+        <input type ='text' value ='<%= i%>'/>&nbsp;=
+        <input type ='text' value ='<%=Integer.parseInt(n)* i%>'/><br> 
+    </center>         
+    <%
+        }
+    %>
+
+Ahora, cuando tu entras en la página no tiene que salir la tabla, hasta que no se presione el boton
+
+            String n = "0";
+            boolean entrar = false;----> creo una bandera para que cuando sea true aparezca la tabla de multiplicar
+            if (request.getParameter("cmdEnviar") != null) {
+                n = request.getParameter("rNumero");
+                entrar = true;  --->   
+
+         if (entrar) {---> antes del for hago este if y hasta que no sea true no aparecerá
+            for (int i = 1; i < 13; i++) {
+                ------> el proceso de multiplicacion
+                }
+           }
+
+para evitar pulsar directamente el boton sin haber seleccionado no tiene que salir nada
+
+String n = "0";
+            boolean entrar = false;
+            boolean entrarMensaje = false;
+            if (request.getParameter("cmdEnviar") != null) {
+                n = request.getParameter("rNumero");
+                if (n != null) {----> aquí mientras sea distinto de null no va a entrar nada
+                    entrar = true;
+                 } else{
+                entrarMensaje = true;---> este nos va a sacar un mensaje de ERROR
+            } 
+            }
+
+
+para que el mensaje nos lo muestre debajo de la tabla lo pondremos al final
+
+<%
+            }--> este es el cierre de arriba del todo
+        }
+    %>       
+
+    <%
+        if (entrarMensaje ==true){---> se hace el if de la bandera se aplica un estilo a la caja para entre el texto
+            out.print("<br><center><input style='width:50%;' type ='text' value='DEBE SOLUCIONAR UNA OPCION' /></center>");
+        }
+        %>
+
+COMBO BOX
+-----------------
+<select name="cboNumero" size="1">----> el size es el tamaño que se le va a dar al combo
+                <option value="4">4</option>  
+                <option value="5">5</option> 
+                <option value="6">6</option> 
+                <option value="7">7</option> 
+                <option value="8">8</option> 
+            </select>
+
+Ejercicio 6
+-------------
+Vamos a hacer un diccionario
+
+<input type ='text' name ='txtIngles' value='' placeholder ='Introduce tu palabra'/>
+                                                                     |________|
+                                                                       texto que cuando introducimos algo desaparece
+
+para desabilitar una cajita hay que hacer lo siguiente:
+<input type ='text' name ='txtSpanish' value='' placeholder ='Español' disabled />
+                                                                                                            ------------
+                                                                                                             deja desactivada para escribir
+
+
+para hacer metodos dentro de un jsp se utiliza
+<%!
+        public String  diccionario(String ingles) {
+
+        String spanish ="";
+        Map <String,String> diccionario_sh = new HashMap<>();
+        diccionario_sh.put("tool","herramienta");
+        diccionario_sh.put("tree", "arbol");
+        diccionario_sh.put("apple","manzana");
+        diccionario_sh.put("run","correr");
+        diccionario_sh.put("break","romper");
+        
+        spanish = diccionario_sh.get(ingles);
+        
+        return spanish;
+}
+%>
+
+para utilizar LocalDate, primero hay que importar las librerias
+
+<%@page import="java.time.Year"%>
+<%@page import="java.time.Month"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.time.LocalDate"%>
+
+LocalDate localDate = LocalDate.now();---------------------> para capturar el dia de hoy del sistema
+String diaSemana = localDate.getDayOfWeek() + "";------> para el día de la semana(por defecto en Ingles)
+String diaNumerico = localDate.getDayOfMonth() + "";----> para el día del mes
+Date mese = localDate.getMonth()----------------------------> para el mes de año(por defecto en Ingles)
+String meses = localDate.getMonth() + "";-------------------> para el mes del año, lo paso a String para poder cambiarlo al español
+int anio = localDate.getYear();---------------------------------> para el año
+
+ <center><h2>Dia de la semana y fecha en Cajas</h2></center><br><br>
+    <center>
+        <input type='text' name='txtSemana' value='<%=dia%>' disabled />
+        <input type='text' name='txtDia' value= '<%=diaNumerico%>' disabled />
+        <input type='text' name='txtMes' value='<%=mes%>' disabled />
+        <input type ='text' name ='txtAnio'  value='<%=anio%>' disabled />
+    </center>
+
+
+Ejercicio 8
+-------------
+Vamos a utilizar un metodo Date para recoger una fecha y sacar el tiempo transcurrido
+
+            String anios = ""; \
+            String meses = "";\
+            String dias = "";     | declaramos las variables
+            String fecha = " ";/
+ if (request.getParameter("cmdEnviar") != null) {
+                fecha = request.getParameter("txtNacimiento");
+                try {
+                    String[] p = fecha.split("-");---> lo metemos en un vector
+
+                    int anio = Integer.parseInt(p[0]);
+                    int mes = Integer.parseInt(p[1]);
+                    int dia = Integer.parseInt(p[2]);
+
+                    LocalDate fnacimiento = LocalDate.of(anio, mes, dia);--> aquí metemos la fecha de inicio
+                    LocalDate factual = LocalDate.now();-----------------------> aquí la fecha actual
+
+                    Period periodo = Period.between(fnacimiento, factual);--> hace la comparacion y saca el resultado
+                    anios = periodo.getYears() + " AÑOS";
+                    meses = periodo.getMonths() + " MESES";
+                    dias = periodo.getDays() + " DIAS";
+                } catch (Exception e) {
+                   
+                }
+            }
+
+<!---Lable como en java--->
+            <label for=''lblNacimiento'>Seleccione fecha de Nacimiento.... </label>
+            <input type='date' name="txtNacimiento" value='<%=fecha%>'>--> aquí la fecha es la que hemos seleccionado
+            <input type='submit' name='cmdEnviar' value='ENVIAR' /> <br><br>
+            <input type="text" value='<%=dias%>' placeholder="DIAS" disabled />-----------> nos devuelve los días transcurridos
+            <input type="text" value='<%=meses%>' placeholder="MESES" disabled />-----> nos devuelve los meses transcurridos
+            <input type="text" value='<%=anios%>' placeholder="AÑOS" disabled />--------> nos devuelve los años transcurridos
+
+Ejercicio 9
+-------------
+
+Calculadora
+
+
+
+
+
+
+
+Ejercicio13
+---------------
+PREGUNTAS EXAMEN TEORICO
+------------------------------------------
+las etiquetas de expresion es: <%= %> es donde vamos a meter los valores de las variables JAVA
+Para ordenar(filtro)  HasMap utilizaremos TreeMap después de un HashMap
+<% %> son scripless
+Cuando conectamos a una base de datos tenemos que registrar el driver con
+--------------------------------------------------------
+ Class.forName("com.mysql.jdbc.Driver");  ---
+--------------------------------------------------------

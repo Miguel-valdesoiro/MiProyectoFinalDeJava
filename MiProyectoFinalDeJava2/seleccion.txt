@@ -1,0 +1,20 @@
+INSERT INTO seleccion ( id_Empresa ,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('1','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','10','19');
+INSERT INTO seleccion( id_Empresa,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('2','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','29','19');
+INSERT INTO seleccion( id_Empresa,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('3','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','10','19');
+INSERT INTO seleccion( id_Empresa,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('4','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','10','9');
+INSERT INTO seleccion( id_Empresa,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('5','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','20','19');
+INSERT INTO seleccion( id_Empresa,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('6','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','7','4');
+INSERT INTO seleccion( id_Empresa,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('7','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','19','19');
+INSERT INTO seleccion( id_Empresa,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('8','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','14','11');
+INSERT INTO seleccion( id_Empresa,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('9','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','17','15');
+INSERT INTO seleccion( id_Empresa,id_Puesto,criterio_Seleccion,anuncio_Seleccion,responsable_Seleccion,genero_responsable,genero_Seleccion, tipo_Seleccion, numero_Hombres,numero_mujeres)
+VALUES('10','jefe','calificacion','atresmedia','jose','hombre','masculino','xxxxxxxx','15','19');

@@ -1,0 +1,6 @@
+{ #288d85 }; verde fuerte
+{ #b9d9b4 }; verde claro
+{ #d18e8f }; rosa claro
+{ #b05574 }; rosa fuerte
+{ #f0a991 }; crema
+{ #CED1CD }; gris base

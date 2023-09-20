@@ -1,0 +1,491 @@
+WEB
+------
+REPASO1
+-------------
+ref---> hace hipervinculo para poder enlazar los distintos archivos jsp
+
+<form action =''></f>---> formularios
+<p></p> ----> parrafo
+<br> ---> salto de línea
+
+<input type='radio' name='N1' value='4'/> 4----> salida por pantalla
+                   |_____|           |__|           |_|
+                tipo boton       nombre      valor
+
+<input type='submit' name ='cmdSeleccion' value='ENVIAR'/>
+                   |______|           |___________|            |______|
+                 TIPO BOTON      NOMBRE BOTON        SALIDA PANTALLA
+
+  if (request.getParameter('cmdSeleccion') != null){
+}    |_________________| |___________|
+      recogida parametros     nombre boton
+
+ n= request.getParameter("rN");
+     |_________________|
+    RECOGIDA DATOS DE LA CAJITA
+
+<center>
+        <input type='text' value='<%=n%>'  />&nbsp;&nbsp;*&nbsp;
+                                              |_______|     |____|
+                                           VALOR DE N   ESPACIO EN BLANCO
+
+        <input type='text' value='<%=i%>'  />&nbsp;&nbsp;=&nbsp;
+
+        <input type='text' value='<%=Integer.parseInt(n) * i%>' /><br>
+
+    </center> 
+
+REPASO2
+-------------
+
+ SELECCIONE UN NUMERO N<br> 
+            <select name="cboN" size="1">----> COMBO BOX, size es el tamaño de valores que van a salir
+                <option value="4">4</option>  --> se usa option para cada uno de los valores
+                <option value="5">5</option> 
+                <option value="6">6</option> 
+                <option value="7">7</option> 
+                <option value="8">8</option> 
+            </select><br><br>
+
+            <input type='submit' name='cmdEnviar' value='ENVIAR'/>-->boton de ejecutar
+
+Para estos dos ejemplos solo cambia la forma de recoger los valores.
+
+REPASO3
+-------------
+
+<%@page import="java.util.HashMap"%>----> a esto se le llama
+<%@page import="java.util.Map"%>
+
+Se coge los valores y se le envia al metodo diccionario para que devuelva la palabra en español
+ <%
+                    String ingles="";
+                    String spanish="";
+                    if(request.getParameter("cmdEnviar") !=null){
+                    
+                    ingles= request.getParameter("txtIngles");---> coge la palabra en ingles
+                    spanish= diccionario(ingles.toLowerCase());--->devuelve la palabra en español
+                    if(spanish == null){
+                    out.print("PALABRA NO REGISTRADA");
+            }
+                    
+            }
+
+            %>
+
+<input type='text' name='txtIngles' value='<%=ingles%>' placeholder='INGLES'/>----> placeholder se pone en la casilla la palabra elegida
+                                                                                                                                     y cuando se escribe se borra, es solo para que no
+                                                                                                                                     esté en blanco la casilla.
+
+Hay que hacer un metodo que va a ser el diccionario mediante un HashMap
+<%!---> cuando se hace fuera del cuerpo html se especifica así
+   
+public String diccionario(String ingles){
+
+    String spanish="";
+    // aqui hacemos el hasmap
+    Map <String,String> ingles_hm = new HashMap<>();
+        ingles_hm.put("apple","manzana");
+        ingles_hm.put("tool","herramienta");
+        ingles_hm.put("tree","arbol");
+        ingles_hm.put("return","retorno");
+        ingles_hm.put("blue","azul");
+        spanish= ingles_hm.get(ingles);-----> el metodo get hace que coja el valor de la palabra en ingles
+return spanish;
+}
+
+REPASO 4
+--------------
+
+<%@page import="java.time.LocalDate"%>
+
+
+                 LocalDate localDate = LocalDate.now();
+                |------------> clase
+                String diaSemana     = localDate.getDayOfWeek()+"";
+                String diaMes           = localDate.getDayOfMonth()+"";
+                String mesAnio         = localDate.getMonth()+"";---> hay una clase Month, pero para este caso mejor un String
+                int anio                     = localDate.getYear();
+
+
+REPASO 5
+--------------
+<%@page import="java.time.Period"%>
+<%@page import="java.time.LocalDate"%>
+
+
+ if (request.getParameter("cmdEnviar") != null) {
+                fecha = request.getParameter("txtNacimiento");
+                try {
+                    String[] p = fecha.split("-");----> recogemos la fecha y la metemos en vector separando por '-'
+                    int anio = Integer.parseInt(p[0]);
+                    int mes = Integer.parseInt(p[1]);
+                    int dia = Integer.parseInt(p[2]);
+
+                    LocalDate fchNac = LocalDate.of(anio, mes, dia);--> con el metodo of le damos un valor numerico 
+                                                                                                       a la fecha
+                    LocalDate fchaAct = LocalDate.now();
+                    
+                    Period periodo = Period.between(fchNac, fchaAct);---> con el metodo between de la clase Periodo
+                                                                                                           sacamos la diferencia de tiempo
+                    anios = periodo.getYears() + " AÑOS";
+                    meses = periodo.getMonths() +" MESES";
+                    dias = periodo.getDays() +" DIAS";
+                    
+
+                } catch (Exception e) {
+                    out.print("FECHA INCORRECTA");
+                }
+
+            }
+
+ <!---Lable como en java--->
+ <label for=''lblNacimiento'>Seleccione fecha de Nacimiento.... </label>----> simplemente un titulo
+ <input type='date' name="txtNacimiento" value='<%=fecha%>'>---> se abre un calendario para elegir fecha
+ <input type='submit' name='cmdEnviar' value='ENVIAR' /> <br><br>
+ <input type="text" value='<%=dias%>' placeholder="DIAS" disabled />
+ <input type="text" value='<%=meses%>' placeholder="MESES" disabled />
+ <input type="text" value='<%=anios%>' placeholder="AÑOS" disabled />
+
+
+REPASO 6
+---------------
+
+He cogido el último de ellos
+
+ <input type='text' name="txtN1" value ='<%=n1%>' placeholder ="Número 1" />
+            <input type="text" name="txtN2" value='<%=n2%>'  placeholder ="Número 2" />
+            <input type="text" name="txtR" value ='<%=r%>' placeholder ="Resultado"  disabled/>
+            <input type="submit" name="cmdCalcular" value="+" />    \
+            <input type="submit" name="cmdCalcular" value="-"/>       \ para hacer el switch ya que se elige 1
+            <input type="submit" name="cmdCalcular" value="*"/>      /
+            <input type="submit" name="cmdCalcular" value="/"/>    /
+
+ try {
+                if ((operador = request.getParameter("cmdCalcular")) != null) {
+
+                    n1 = request.getParameter("txtN1");
+                    n2 = request.getParameter("txtN2");
+                    switch (operador) { ---> con las distintas operaciones
+                        case "+":
+                            s = Double.parseDouble(n1) + Double.parseDouble(n2);
+                            break;
+                        case "-":
+                            s = Double.parseDouble(n1) - Double.parseDouble(n2);
+                            break;
+                        case "*":
+                            s =Double.parseDouble(n1) * Double.parseDouble(n2);
+                            break;
+                        case "/":
+                            s = Double.parseDouble(n1) / Double.parseDouble(n2);
+                            break;
+
+                    }
+                    r = s + "";---> resultado pasado a String
+
+REPASO 7
+-------------
+
+<style>
+            input[type=text] {---> metodo para las cajitas
+                text-align:center;
+                border-radius: 5px;
+                border: 2px solid #39c;
+                width: 100px;
+            }
+            .redondear {---> metodo para las imagenes
+                width: 40px;
+                height: 40px;
+                border: 2px solid black;
+                border-radius: 60px;
+            }
+
+</style>
+
+ String url = "jdbc:mysql://localhost:3306/colegio";
+            String usuario = "root";
+            String clave = "";
+
+            //registramos el driver
+             Class.forName("com.mysql.jdbc.Driver");---> MUY IMPORTANTE
+            Connection conexion = DriverManager.getConnection(url, usuario, clave);
+
+            try {
+
+                String query = "SELECT * FROM alumno;";
+                PreparedStatement ps = conexion.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+
+                    String codigo = rs.getString(1);
+                     String nombre = rs.getString(2);
+                    String edad = rs.getInt(3)+"";
+                    String estatura = rs.getDouble(4)+"";
+                     String foto = rs.getString(5);
+                    String ruta = request.getContextPath() + "/repaso/image/" + foto;
+                                                     |_____________|
+                                                     coge los parametros de la imagen diciendo la ruta y el codigo de la foto
+
+                               
+%>
+
+    <center>
+                      
+        <!--- Hacemos la salida --->
+        <input type='text' value='<%=codigo%>' disabled />
+        <input type='text' value='<%=nombre%>' disabled />
+        <input type='text' value='<%=edad%>' disabled />
+        <input type='text' value='<%=estatura%>' disabled />
+        <img class='redondear' src='<%=ruta%>' /><br>
+         |___||___|                      |__|
+        
+   </center>                      
+        <%
+            
+               }
+
+            } catch (Exception e) {
+                out.print("ERROR: NO SE HA PODIDO HACER LA CONEXION");
+            }
+
+
+        %>
+
+REPASO 8
+--------------
+
+<style>
+            .redondear {----> Estilo para la foto
+                width: 40px;
+                height: 40px;
+                border: 2px solid black;
+                border-radius: 80px;
+            }
+            table, tr, th, td{--------> estilo para la tabla y fuente
+                border: 3px solid graytext;
+                font-family:"Comic Sans MS";
+                                   |___________|
+            }
+            #cabecera {-------------> estilo para la cabecera siempre con #
+           |_|     background-color: #F7F171;
+                    font-weight: bold;
+            }
+
+            .codigo {------------------> estilo para las filas y columnas con '.'
+           |_|     background-color: #A2E4FB;
+            }
+        </style>
+
+ <center>
+        <table>
+            <tr>----> definicion de la columna(https://developer.mozilla.org/es/docs/Web/HTML/Element/tr)
+
+                <th id="cabecera"> Código </th>---> lo que va a contener en la fila
+                <th id="cabecera"> Nombre </th>--->(https://developer.mozilla.org/es/docs/Web/HTML/Element/th) 
+                <th id="cabecera"> Edad</th>
+                <th id="cabecera"> Estatura </th>
+                <th id="cabecera"> Fotografía </th>
+                      |__________|
+                      estilo cabecera
+
+            </tr>    
+
+el codigo es el mismo que el anterior, la diferencia viene a la hora de cargar la tabla en codigo html:
+
+  <tr>
+
+                    <th style="text-align: center" class="codigo"><%=codigo%></th>
+                    <th style="text-align: center" class="codigo"><%=nombre%></th>
+                    <th style="text-align: center" class="codigo"><%=edad%></th>
+                                                                 |___________|
+                                                                   Estilo para las filas y columnas
+                    <th style="text-align: center" class="codigo"><%=estatura%></th>
+                          |__________________|
+                          alineacion central
+                    <th style="text-align: center" class="codigo"><img class="redondear" src ='<%=ruta%>'</th>
+                                                                                        |_________________________________|
+
+                </tr>
+
+REPASO 9
+--------------
+
+En este ejercicio hay que hacer antes dos cosas
+
+en Source Packages tenemos que crear un paquete que le he llamado JAVA_14
+Creamos 2 classJava
+1.- Alumno---> contendrá la clase alumno
+2.- OperacionCrud----> contiene la conexion y los métodos de busqueda que necesitamos
+
+En OperacionesCrud :
+---------------------------
+
+        String url = "jdbc:mysql://localhost:3306/" + db;---> la definiremos en la clase html dependido de la bd 
+        String usuario = "root";
+        String clave = "";
+
+el metodo de busqueda que vamos a emplear:
+
+public Map<String,Alumno> getHashMapAlumno() {---> en vez de un arrayList hacemos un HashMap
+
+       Map<String,Alumno> alumnos_hm = new HashMap<>();
+
+        String query = "SELECT * FROM alumno";
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                String codigo = rs.getString(1);
+                String nombre=rs.getString(2);
+                int edad = rs.getInt(3);
+                double estatura = rs.getDouble(4);
+                String foto= rs.getString(5);
+                
+                //creamos el objeto para pasarlo al hashMap
+                Alumno alumno = new Alumno(codigo,nombre,edad,estatura,foto);-->llamamos a la clase Alumno
+                
+                alumnos_hm.put(alumno.getCodigo(),alumno);
+            }
+        } catch (Exception e) {
+            alumnos_hm = null;
+        }
+        return alumnos_hm;
+    }
+}
+
+ARCHIVO HTML
+--------------------
+ <%
+        //creamos el objeto crud
+        
+        OperacionesCrud  crud = new OperacionesCrud("colegio");--> aqui defino la base de datos a emplear
+         
+Map<String, Alumno> alumno_hm = crud.getHashMapAlumno();---> llamamos al hasmap de opercionesCrud
+
+    TreeMap<String, Alumno> alumno_tm = new TreeMap<>(alumno_hm);--> ordenamos el hashMap
+
+    Set<String> claves = alumno_tm.keySet();-->obtengo todas las claves
+        %>
+
+  <%   boolean salida = false;
+                Alumno a = null;
+            if (request.getParameter("cmdSeleccionar") != null) {
+               
+                String codigo = request.getParameter("cboCodigo");
+                a = alumno_hm.get(codigo);---> cojo el codigo del objeto que luego llamaré en la salida
+                salida = true;
+               
+            }
+
+
+        %>
+
+
+    <center>
+        <form action=''>
+            <select name="cboCodigo" size="1">---> es el combox de 1 sola opcion por pantalla
+                <%                    for (String s : claves) {
+                %>
+                <option value='<%=s%>'><%=s%></option>  --> cargamos las claves para poder elegir
+                <%
+                    }
+                %>
+            </select><br><br>
+            <input type='submit' name='cmdSeleccionar' value='SELECCIONAR' />
+        </form>
+
+        <%
+                if(salida == true){---> si salida es true cargamos la foto y todos los datos
+                     String ruta = request.getContextPath()+"/repaso/image/"+a.getFoto();
+          %>
+                
+         <img class ='redondear' src="<%=ruta%>" title='<%=a.getNombre()%>'/>  <br><br><!-- primero la imagen-->
+           |_______________________________|  |_____________________|
+                   cargamos la foto                                   el nombre de la foto
+         <input type="text" value="<%=a.getCodigo()%>" />
+         <input type="text" value="<%=a.getNombre()%>" />
+         <input type="text" value="<%=a.getEdad()%>" />
+         <input type="text" value="<%=a.getEstatura()%>" />
+              
+                <%
+                
+            }
+
+            
+            %>
+
+REPASO 10
+---------------
+En este caso es con varias posibilidades de salida
+
+Es muy similiar al anterior solo que hay que cambiar ciertas cosas:
+
+  <%
+            boolean salida = false;
+            Map<String, Alumno> alumnos1_hm = new HashMap<>();---> creamos otro para guardar 
+                                                                                                              clave introducida y datos del otro HasHMap
+            if (request.getParameter("cmdSeleccionar") != null) {
+
+                String[] codigo = request.getParameterValues("cboCodigo");---> al ser varios datos los guardamos así
+                                                                                                                       en un vector
+                for (String k : codigo) {--> recorremos el for para sacar los datos de estos
+                    Alumno a1 = alumnos_hm.get(k);-->sacamos los datos
+                    alumnos1_hm.put(k, a1);---> lo guardamos en el nuevo HashMap que hemos creado
+                }
+
+                salida = true;
+            }
+        %>
+
+
+
+
+    <center>
+        <form action=''>
+            <select name="cboCodigo" multiple="true" size="5">--> la diferencia es multiple="true", size es para ver
+                                                                                                    cuantos salen en pantalla a la vez para elegir
+                <%                    for (String s : claves) {
+                %>
+                <option value='<%=s%>'><%=s%></option>  
+                <%
+                    }
+                %>
+            </select><br><br>
+            <input type='submit' name='cmdSeleccionar' value='SELECCIONAR' />
+        </form>
+
+
+        <%
+            if (salida == true) {
+                Collection coleccion = alumnos1_hm.values();--> creamos una coleccion para sacar los valores
+
+                for (Object o : coleccion) {---> recorremos la coleccion
+                    Alumno a = (Alumno) o;---> nos da todos los datos de alumnos para poder pintarlos
+
+                    String ruta = request.getContextPath() + "/repaso/image/" + a.getFoto();
+
+
+        %>       
+
+        <center>
+            <br><br>
+            <img class='redondear' src='<%=ruta%>' title='<%=a.getNombre()%>'><br><br>
+
+            <input type='text' value='<%=a.getCodigo()%>' disabled />
+            <input type='text' value='<%=a.getNombre()%>' disabled />
+            <input type='text' value='<%=a.getEdad()%>' disabled />
+            <input type='text' value='<%=a.getEstatura()%>' disabled />
+
+        </center>
+
+        <%
+                }
+            }
+        %>
+

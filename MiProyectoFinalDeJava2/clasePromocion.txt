@@ -1,0 +1,127 @@
+** va dentro del paquete domain 
+
+
+package domain;
+
+import java.util.Date;
+
+public class Promocion {
+    
+    
+    private int idProm;
+    private int id_Empresa;
+    private String puestoAnterior;
+    private String parteEcon; //incremento de sueldo si o no?
+    private int numPersProm; //numero total de personas candidatas al puesto
+    private int numMujProm;//numero de mujeres candidatas al puesto
+    private int numHomProm;//numero de hombres candidatos al puesto
+    private String respProm;//responsable de la promocion
+    private String puestoNuevo;
+    private Date fechaProm;
+
+    
+    public Promocion() {
+   
+    }     
+    public Promocion(int idProm, int id_Empresa, String puestoAnterior, String parteEcon, int numPersProm, int numMujProm, int numHomProm, String respProm, String puestoNuevo, Date fechaProm) {
+        this.idProm = idProm;
+        this.id_Empresa = id_Empresa;
+        this.puestoAnterior = puestoAnterior;
+        this.parteEcon = parteEcon;
+        this.numPersProm = numPersProm;
+        this.numMujProm = numMujProm;
+        this.numHomProm = numHomProm;
+        this.respProm = respProm;
+        this.puestoNuevo = puestoNuevo;
+        this.fechaProm = fechaProm;
+    }
+
+    public int getIdProm() {
+        return idProm;
+    }
+
+    public int getId_Empresa() {
+        return id_Empresa;
+    }
+
+    public String getPuestoAnterior() {
+        return puestoAnterior;
+    }
+
+    public String getParteEcon() {
+        return parteEcon;
+    }
+
+    public int getNumPersProm() {
+        return numPersProm;
+    }
+
+    public int getNumMujProm() {
+        return numMujProm;
+    }
+
+    public int getNumHomProm() {
+        return numHomProm;
+    }
+
+    public String getRespProm() {
+        return respProm;
+    }
+
+    public String getPuestoNuevo() {
+        return puestoNuevo;
+    }
+
+    public Date getFechaProm() {
+        return fechaProm;
+    }
+
+    public void setIdProm(int idProm) {
+        this.idProm = idProm;
+    }
+
+    public void setId_Empresa(int id_Empresa) {
+        this.id_Empresa = id_Empresa;
+    }
+
+    public void setPuestoAnterior(String puestoAnterior) {
+        this.puestoAnterior = puestoAnterior;
+    }
+
+    public void setParteEcon(String parteEcon) {
+        this.parteEcon = parteEcon;
+    }
+
+    public void setNumPersProm(int numPersProm) {
+        this.numPersProm = numPersProm;
+    }
+
+    public void setNumMujProm(int numMujProm) {
+        this.numMujProm = numMujProm;
+    }
+
+    public void setNumHomProm(int numHomProm) {
+        this.numHomProm = numHomProm;
+    }
+
+    public void setRespProm(String respProm) {
+        this.respProm = respProm;
+    }
+
+    public void setPuestoNuevo(String puestoNuevo) {
+        this.puestoNuevo = puestoNuevo;
+    }
+
+    public void setFechaProm(Date fechaProm) {
+        this.fechaProm = fechaProm;
+    }
+
+    @Override
+    public String toString() {
+        return "Promocion{" + "idProm=" + idProm + ", id_Empresa=" + id_Empresa + ", puestoAnterior=" + puestoAnterior + ", parteEcon=" + parteEcon + ", numPersProm=" + numPersProm + ", numMujProm=" + numMujProm + ", numHomProm=" + numHomProm + ", respProm=" + respProm + ", puestoNuevo=" + puestoNuevo + ", fechaProm=" + fechaProm + '}';
+    }
+
+    
+}
+
+  
