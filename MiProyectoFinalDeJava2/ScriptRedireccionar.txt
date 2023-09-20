@@ -1,3 +1,0 @@
-<script>
-    location.replace('http://localhost:8080/Igualdad/Administrador/Mostrar_Empresas.jsp');
-</script>
